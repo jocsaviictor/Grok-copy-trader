@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-[#EFEFE9]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grok Bot - Veyro Terminal Copy Trader</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background-color: #ECECE6;
+            color: #111111;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Custom styles to match the reference app design */
+        .bot-banner {
+            background: radial-gradient(circle at 80% 20%, #2a1b12 0%, #111111 60%, #0a0a0a 100%);
+        }
+        .text-neon-green {
+            color: #2be881;
+        }
+        .bg-neon-green {
+            background-color: #2be881;
+        }
+        .orange-btn {
+            background: linear-gradient(135deg, #FF5500 0%, #FF3300 100%);
+            box-shadow: 0 4px 15px rgba(255, 68, 0, 0.4);
+        }
+        /* Hide scrollbar for clean app feel */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="h-full flex justify-center items-start sm:py-6 sm:px-4">
+
+    <!-- Mobile Frame Outer Container -->
+    <div class="w-full max-w-md bg-[#ECECE6] min-h-screen sm:min-h-[880px] sm:max-h-[920px] sm:rounded-[40px] sm:shadow-2xl sm:border-[8px] sm:border-slate-900 overflow-hidden flex flex-col relative pb-24">
+        
+        <!-- Top Dynamic Island / Notification Bar -->
+        <div class="pt-3 px-4 pb-2 flex justify-between items-center sticky top-0 z-30 bg-[#ECECE6]/90 backdrop-blur-md">
+            <div class="text-xs font-bold text-slate-800 tracking-tight flex items-center gap-1.5">
+                <span>10:05</span>
+            </div>
+            
+            <!-- Dynamic Island Signal Bar -->
+            <div class="bg-black text-white px-3 py-1.5 rounded-full flex items-center gap-3 text-xs font-semibold shadow-md">
+                <div class="flex items-center gap-1.5">
+                    <div class="w-4 h-4 rounded-full bg-amber-500 text-black flex items-center justify-center text-[10px] font-black">P</div>
+                    <span class="text-slate-200">$PUDDIN</span>
+                </div>
+                <span class="text-neon-green font-bold">+$388</span>
+            </div>
+
+            <div class="flex items-center gap-1 text-slate-700 text-xs">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- App Main Content Area -->
+        <div class="flex-1 overflow-y-auto px-4 space-y-4 no-scrollbar pt-1">
+
+            <!-- MAIN BOT HERO CARD (GROK BOT - VEYRO TERMINAL) -->
+            <div class="bot-banner text-white rounded-[28px] p-5 relative overflow-hidden shadow-xl border border-white/10">
+                <!-- Top Status Badge -->
+                <div class="flex justify-between items-start z-10 relative">
+                    <div class="w-20"></div> <!-- Spacer for Mascot -->
+                    <div class="text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <h2 class="text-xl font-extrabold tracking-tight">Grok Bot</h2>
+                            <span class="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase tracking-wider">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> LIVE
+                            </span>
+                        </div>
+                        <span class="inline-block text-[10px] font-bold uppercase tracking-wider bg-[#FF4500] text-white px-2 py-0.5 rounded-md mt-0.5">
+                            VEYRO TERMINAL
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Mascot & Profit Info -->
+                <div class="mt-2 flex items-end justify-between relative z-10">
+                    <!-- Stylized Grok / Bot Face Illustration -->
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-b from-slate-200 to-slate-400 flex items-center justify-center p-1 shadow-2xl relative border-4 border-slate-800 -mb-2">
+                        <div class="w-full h-full rounded-full bg-slate-300 flex items-center justify-center gap-3">
+                            <div class="w-3.5 h-7 bg-slate-900 rounded-full transform -rotate-12"></div>
+                            <div class="w-3.5 h-7 bg-slate-900 rounded-full transform rotate-12"></div>
+                        </div>
+                    </div>
+
+                    <!-- Profit Numbers -->
+                    <div class="text-right">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">PROFIT</span>
+                        <div class="text-4xl font-extrabold text-neon-green tracking-tight leading-none mt-0.5" id="hero-profit">
+                            +$1,430
+                        </div>
+                        <div class="text-xs text-slate-300 font-medium mt-1">
+                            +7.63 SOL
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Winrate & Stats Pills -->
+                <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between z-10 relative">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold text-white border border-white/15">
+                            1.95x
+                        </span>
+                        <span class="text-xs text-slate-300 font-medium">8 trades · 88% win</span>
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-semibold">goal 5x</span>
+                </div>
+
+                <!-- Goal Progress Bar -->
+                <div class="w-full h-1.5 bg-slate-800 rounded-full mt-2 overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-orange-500 to-emerald-400 rounded-full w-[39%]"></div>
+                </div>
+            </div>
+
+            <!-- PROFIT BY AGENT CARD -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-3.5 shadow-sm border border-slate-200/60">
+                <div class="flex justify-between items-center text-xs font-bold mb-2">
+                    <span class="text-slate-800">Profit by agent</span>
+                    <span class="text-slate-400 font-normal text-[11px]">Grok Bot runs 4 agents</span>
+                </div>
+
+                <!-- Multi-color Agent Progress Bar -->
+                <div class="w-full h-2.5 bg-slate-100 rounded-full flex overflow-hidden gap-0.5">
+                    <div class="h-full bg-orange-500 w-[45%]" title="Grok Scout"></div>
+                    <div class="h-full bg-blue-500 w-[10%]" title="Sniper"></div>
+                    <div class="h-full bg-emerald-500 w-[25%]" title="Curve"></div>
+                    <div class="h-full bg-purple-500 w-[20%]" title="Graduate"></div>
+                </div>
+
+                <!-- Agent Legend -->
+                <div class="flex flex-wrap items-center justify-between text-[11px] font-semibold text-slate-700 mt-2.5 pt-1">
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-orange-500"></span> Grok Scout <strong class="text-slate-900">+$380</strong>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span> Sniper <strong class="text-slate-900">+$58</strong>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Curve <strong class="text-slate-900">+$364</strong>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-purple-500"></span> Graduate <strong class="text-slate-900">+$628</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLOSED TRADES GRID -->
+            <div>
+                <div class="flex justify-between items-center mb-2 px-1">
+                    <h3 class="font-extrabold text-sm text-slate-900">Closed trades</h3>
+                    <span class="text-xs text-slate-400 font-semibold">8 total</span>
+                </div>
+
+                <!-- Grid 2 columns for tokens -->
+                <div class="grid grid-cols-3 gap-2" id="closed-trades-grid">
+                    
+                    <!-- Token Item 1 -->
+                    <div class="bg-white rounded-xl p-2.5 shadow-sm border border-slate-200/80 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-4 h-4 rounded-full bg-amber-500 text-white flex items-center justify-center text-[9px] font-bold">P</span>
+                            <span class="text-xs font-extrabold text-slate-800 tracking-tight">$PUDDIN</span>
+                        </div>
+                        <div class="flex justify-between items-baseline pt-1">
+                            <span class="text-xs font-black text-emerald-600">+142%</span>
+                            <span class="text-[10px] font-bold text-slate-500">+$388</span>
+                        </div>
+                    </div>
+
+                    <!-- Token Item 2 -->
+                    <div class="bg-white rounded-xl p-2.5 shadow-sm border border-slate-200/80 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-4 h-4 rounded-full bg-sky-500 text-white flex items-center justify-center text-[9px] font-bold">W</span>
+                            <span class="text-xs font-extrabold text-slate-800 tracking-tight">$WOBBLE</span>
+                        </div>
+                        <div class="flex justify-between items-baseline pt-1">
+                            <span class="text-xs font-black text-emerald-600">+58%</span>
+                            <span class="text-[10px] font-bold text-slate-500">+$210</span>
+                        </div>
+                    </div>
+
+                    <!-- Token Item 3 -->
+                    <div class="bg-white rounded-xl p-2.5 shadow-sm border border-slate-200/80 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center text-[9px] font-bold">X</span>
+                            <span class="text-xs font-extrabold text-slate-800 tracking-tight">$SXCAT</span>
+                        </div>
+                        <div class="flex justify-between items-baseline pt-1">
+                            <span class="text-xs font-black text-emerald-600">+110%</span>
+                            <span class="text-[10px] font-bold text-slate-500">+$262</span>
+                        </div>
+                    </div>
+
+                    <!-- Token Item 4 (Negative) -->
+                    <div class="bg-white rounded-xl p-2.5 shadow-sm border border-slate-200/80 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-4 h-4 rounded-full bg-amber-800 text-white flex items-center justify-center text-[9px] font-bold">M</span>
+                            <span class="text-xs font-extrabold text-slate-800 tracking-tight">$MEOWX</span>
+                        </div>
+                        <div class="flex justify-between items-baseline pt-1">
+                            <span class="text-xs font-black text-rose-500">-12%</span>
+                            <span class="text-[10px] font-bold text-rose-400">-$38</span>
+                        </div>
+                    </div>
+
+                    <!-- Token Item 5 -->
+                    <div class="bg-white rounded-xl p-2.5 shadow-sm border border-slate-200/80 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-4 h-4 rounded-full bg-purple-500 text-white flex items-center justify-center text-[9px] font-bold">F</span>
+                            <span class="text-xs font-extrabold text-slate-800 tracking-tight">$FLOOF</span>
+                        </div>
+                        <div class="flex justify-between items-baseline pt-1">
+                            <span class="text-xs font-black text-emerald-600">+128%</span>
+                            <span class="text-[10px] font-bold text-slate-500">+$240</span>
+                        </div>
+                    </div>
+
+                    <!-- Token Item 6 -->
+                    <div class="bg-white rounded-xl p-2.5 shadow-sm border border-slate-200/80 space-y-1">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] font-bold">B</span>
+                            <span class="text-xs font-extrabold text-slate-800 tracking-tight">$SBAGZ</span>
+                        </div>
+                        <div class="flex justify-between items-baseline pt-1">
+                            <span class="text-xs font-black text-emerald-600">+71%</span>
+                            <span class="text-[10px] font-bold text-slate-500">+$154</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- GROK AI INTELLIGENCE FEED ("Typing in VEYRO") -->
+            <div class="bg-white/90 rounded-2xl p-4 shadow-sm border border-slate-200 space-y-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-xs text-slate-900">Grok Bot Feed</h4>
+                        <span class="text-[10px] text-slate-400 font-medium block -mt-0.5">typing in VEYRO & FOMO Hub</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2" id="grok-live-feed">
+                    <div class="bg-slate-100/80 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-2 border border-slate-200/50">
+                        <span class="w-1.5 h-4 bg-blue-500 rounded-full"></span>
+                        <span>$PUDDIN about to graduate → in</span>
+                    </div>
+                    <div class="bg-slate-100/80 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-2 border border-slate-200/50">
+                        <span class="w-1.5 h-4 bg-blue-500 rounded-full"></span>
+                        <span>sniping $ZORP in block 0</span>
+                    </div>
+                    <div class="bg-slate-100/80 px-3 py-2 rounded-xl text-xs font-semibold text-slate-500 flex items-center gap-2 border border-slate-200/50">
+                        <span class="w-1.5 h-4 bg-slate-400 rounded-full"></span>
+                        <span>skipped $FREEMINT · 41% bundled (Grok Risk Shield)</span>
+                    </div>
+                    <div class="bg-slate-100/80 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-2 border border-slate-200/50">
+                        <span class="w-1.5 h-4 bg-orange-500 rounded-full"></span>
+                        <span>22K posts on X → buying $GROKMAX</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE SIMULATION BUTTONS -->
+            <div class="pt-2 flex gap-2">
+                <button onclick="simulateNewSignal()" class="flex-1 py-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bolt text-amber-400"></i> Simular Sinal FOMO
+                </button>
+                <button onclick="askGrokChat()" class="py-3 px-4 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-brain"></i> Grok AI
+                </button>
+            </div>
+
+        </div>
+
+        <!-- APP BOTTOM NAVIGATION BAR -->
+        <nav class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-6 py-2.5 flex justify-between items-center z-40">
+            <a href="#" class="flex flex-col items-center gap-1 text-slate-900">
+                <i class="fa-solid fa-house text-base"></i>
+                <span class="text-[10px] font-bold">Home</span>
+            </a>
+            <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-800 transition">
+                <i class="fa-solid fa-border-all text-base"></i>
+                <span class="text-[10px] font-medium">Trades</span>
+            </a>
+
+            <!-- Central Action Button: Withdraw / Sacar -->
+            <button onclick="triggerWithdraw()" class="orange-btn text-white px-5 py-2.5 rounded-full font-extrabold text-xs shadow-lg transform -translate-y-2 hover:scale-105 transition">
+                Withdraw
+            </button>
+
+            <a href="#" onclick="askGrokChat()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-800 transition">
+                <i class="fa-regular fa-comment text-base"></i>
+                <span class="text-[10px] font-medium">Chat</span>
+            </a>
+            <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-800 transition">
+                <i class="fa-regular fa-user text-base"></i>
+                <span class="text-[10px] font-medium">Me</span>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- Notification / Chat Modal -->
+    <div id="action-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl space-y-4 animate-in slide-in-from-bottom duration-200">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-extrabold text-sm text-slate-900 flex items-center gap-2" id="modal-title">
+                    <i class="fa-solid fa-brain text-purple-600"></i> Grok AI Copilot
+                </h3>
+                <button onclick="closeModal()" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed" id="modal-body">
+                Carregando análise...
+            </p>
+            <button onclick="closeModal()" class="w-full py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold shadow-md">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- Interactivity Script -->
+    <script>
+        function closeModal() {
+            document.getElementById('action-modal').classList.add('hidden');
+        }
+
+        function showModal(title, text) {
+            document.getElementById('modal-title').innerHTML = title;
+            document.getElementById('modal-body').innerText = text;
+            document.getElementById('action-modal').classList.remove('hidden');
+        }
+
+        function simulateNewSignal() {
+            const feed = document.getElementById('grok-live-feed');
+            const tokens = ['$FOMOMAX', '$MOONSHOT', '$PEPE2', '$BONK3', '$SOLAPE'];
+            const randomToken = tokens[Math.floor(Math.random() * tokens.length)];
+            const actions = [
+                `I sniping ${randomToken} in block 0 (Sinal FOMO)`,
+                `I 35K posts on X → buying ${randomToken}`,
+                `skipped ${randomToken} · Liquidez desequilibrada (Shielded)`
+            ];
+            const randomAction = actions[Math.floor(Math.random() * actions.length)];
+
+            const newItem = document.createElement('div');
+            newItem.className = 'bg-amber-50 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800 flex items-center gap-2 border border-amber-200/80 animate-bounce';
+            newItem.innerHTML = `<span class="w-1.5 h-4 bg-amber-500 rounded-full"></span> <span>${randomAction}</span>`;
+            
+            feed.prepend(newItem);
+
+            // Update Profit Randomly
+            const profitElem = document.getElementById('hero-profit');
+            let currentVal = parseInt(profitElem.innerText.replace('+$', '').replace(',', ''));
+            currentVal += Math.floor(Math.random() * 80) + 20;
+            profitElem.innerText = '+$' + currentVal.toLocaleString();
+
+            setTimeout(() => {
+                newItem.classList.remove('animate-bounce');
+                newItem.className = 'bg-slate-100/80 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-2 border border-slate-200/50';
+            }, 1000);
+        }
+
+        function askGrokChat() {
+            showModal(
+                '<i class="fa-solid fa-brain text-purple-600"></i> Grok AI Copilot',
+                'Status do Agente Grok 3.5: Monitorando 24 canais do FOMO App. O volume de Solana memecoins subiu 34% nas últimas horas. A taxa de winrate mantida é de 88% com proteção contra Rugpull ativa.'
+            );
+        }
+
+        function triggerWithdraw() {
+            showModal(
+                '<i class="fa-solid fa-wallet text-orange-500"></i> Solicitando Saque',
+                'Deseja realizar o saque dos lucros acumulados (+$1,430.00 / +7.63 SOL) para sua carteira Phantom/Solflare principal?'
+            );
+        }
+    </script>
+</body>
+</html>
