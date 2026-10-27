@@ -304,18 +304,30 @@
             </button>
 
             <a href="#" onclick="askGrokChat()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-800 transition">
-                <div class="bg-black text-white p-6 rounded-2xl w-80">
-  <!-- Perfil -->
-  <div class="flex items-center space-x-4 mb-8">
-    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl font-bold">J</div>
-    <div>
+                <!-- Botão Me -->
+<button onclick="toggleMenu()" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+  <i class="far fa-user"></i> <span>Me</span>
+</button>
+
+<!-- Menu Me -->
+<div id="me-menu" class="hidden bg-black text-white p-6 rounded-2xl w-64 mt-4">
+  <!-- Conteúdo do Menu -->
+  ... (restante do código do menu)
+</div>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('me-menu');
+  menu.classList.toggle('hidden');
+}
+</script>
+
       <h2 class="text-lg font-bold">@jocaviictor</h2>
       <a href="#" class="text-blue-500 text-sm flex items-center">
         <i class="fab fa-x-twitter mr-1"></i> Vincule a sua conta X
       </a>
     </div>
   </div>
-
   <!-- Conta -->
   <div class="mb-6">
     <div class="flex justify-between items-center mb-4">
