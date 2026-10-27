@@ -304,11 +304,53 @@
             </button>
 
             <a href="#" onclick="askGrokChat()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-800 transition">
-                <i class="fa-regular fa-comment text-base"></i>
-                <span class="text-[10px] font-medium">Chat</span>
-            </a>
-            <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-800 transition">
-                <i class="fa-regular fa-user text-base"></i>
+                <div class="bg-black text-white p-6 rounded-2xl w-80">
+  <!-- Perfil -->
+  <div class="flex items-center space-x-4 mb-8">
+    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl font-bold">J</div>
+    <div>
+      <h2 class="text-lg font-bold">@jocaviictor</h2>
+      <a href="#" class="text-blue-500 text-sm flex items-center">
+        <i class="fab fa-x-twitter mr-1"></i> Vincule a sua conta X
+      </a>
+    </div>
+  </div>
+
+  <!-- Conta -->
+  <div class="mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-gray-400">Conta 1</span>
+      <i class="fas fa-chevron-down text-gray-500"></i>
+    </div>
+  </div>
+
+  <!-- Itens do Menu -->
+  <nav class="space-y-4">
+    <a href="#" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+      <i class="far fa-user"></i> <span>Perfil</span>
+    </a>
+    <a href="#" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+      <i class="far fa-comment-dots"></i> <span>Chats</span>
+    </a>
+    <a href="#" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+      <i class="far fa-heart"></i> <span>Lista de observação</span>
+    </a>
+    <a href="#" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+      <i class="far fa-clock"></i> <span>Histórico</span>
+    </a>
+    <a href="#" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+      <i class="fas fa-gift"></i> <span>Indique e ganhe</span>
+    </a>
+    <hr class="border-gray-800 my-4" />
+    <a href="#" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+      <i class="fas fa-cog"></i> <span>Definições</span>
+    </a>
+    <a href="#" class="flex items-center space-x-3 text-lg hover:text-gray-300">
+      <i class="far fa-circle-question"></i> <span>Ajuda e suporte</span>
+    </a>
+  </nav>
+</div>
+
                 <span class="text-[10px] font-medium">Me</span>
             </a>
         </nav>
